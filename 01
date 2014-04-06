@@ -1,0 +1,43 @@
+/**** 1.パッチ処理でクエリを発行する ****/
+mysql -e 'SOURCE sample.sql' -uroot -p
+mysql -uroot -p < sample.sql
+mysql > SOURCE sample.sql
+
+/**** 2.timestampについて ***/
+データ型にtimestampをしていするだけで、default=current_timestamp,on update current_timestampが
+自動で追記される。
+
+/*** 3.テーブルの状態を確認する方法 ***/
+1, show table status;  現在のテーブルの状態を確認する
+2, use infomation_schema;
+   select table_name,engine from tables where table_schema=(db_name);
+
+3, show create table (table_name) でテーブルを作成した状態を確認できる
+
+/*** 4.indexの作成 ****/
+1,table作成時
+create table zoo_idx (animal varchar(255),INDEX animal_idx(animal_c));
+
+2,既存のテーブル
+alter table zoo add INDEX animal_idx(animal_c);
+
+3.indexの表示
+show index from (table_name);
+
+/**** 4.ユーザーの確認 ***/
+mysqlデーターベースのuserテーブルに格納されていいる
+use mysql;
+select user,paswrod from user;
+delete from user where user='zoo_user' and host='localhost';
+
+/*** 5.ユーザーの作成 ***/
+GRANT ALL ON prac_mysql.zoo TO zoo_user@localhost identified by 'password';
+GRANT SELECT ON prac_mysql.zoo TO zoo_user@localhost identified by 'password';
+
+/*** 6.ユーザー権限の確認 ***/
+SHOW GRANTS FOR 'zoo_user'@'localhost'
+
+/*** 7.パスワードの変更　***/
+SET PASSWORD = PASSWORD('password');
+SET PASSWORD FOR zoo_user@localhost = PASSWORD('password')
+
