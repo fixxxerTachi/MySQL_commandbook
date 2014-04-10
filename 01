@@ -30,6 +30,7 @@ use mysql;
 select user,paswrod from user;
 delete from user where user='zoo_user' and host='localhost';
 flush priveleges   //直接データベースに追加削除を行った場合
+
 /*** 5.ユーザーの作成 ***/
 GRANT ALL ON prac_mysql.zoo TO zoo_user@localhost identified by 'password';
 GRANT SELECT ON prac_mysql.zoo TO zoo_user@localhost identified by 'password';
